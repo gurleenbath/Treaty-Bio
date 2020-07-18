@@ -35,7 +35,7 @@ found [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
     _TODO: add instructions_
 
 ## Running the app
-Run the app from the bball_coach_app folder:
+Run the app from the Treaty-Bio folder:
     
     python main_gui.py
 
