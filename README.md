@@ -37,7 +37,7 @@ found [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
 ## Running the app
 Run the app from the bball_coach_app folder:
     
-    python main.py
+    python main_gui.py
 
 ## Demo files
 Try speech recognition running:
