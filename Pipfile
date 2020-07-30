@@ -11,6 +11,12 @@ speechrecognition = "*"
 pyaudio = {path = "./PyAudio-0.2.11-cp38-cp38-win_amd64.whl"}
 pandas = "*"
 pyttsx3 = "*"
+scipy = "*"
+sklearn = "*"
+gtts = "*"
+pygame = "*"
+blue-st-sdk = "*"
+bleak = "*"
 
 [requires]
 python_version = "3.8"

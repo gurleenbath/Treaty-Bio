@@ -1,12 +1,10 @@
-# Treaty-Bio
-
-Wearable Devices and Computer Vision Final Project - Adaptive Basketball Coach
+#Adaptive Basketball Coach
 
 Utilizing motion sensing wearable technology, our application will train a 
 model on a basketball players specific motion characteristics and provide 
 feedback on a shot by shot basis.
 
-## Installation requirements
+##Installation requirements
 
 The are several technologies being employed:
 * Bluetooth for capturing motion data
@@ -34,12 +32,12 @@ found [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
 * For bluetooth connectivity bluez is used
     _TODO: add instructions_
 
-## Running the app
-Run the app from the Treaty-Bio folder:
+## Running th app
+Run the app from the bball_coach_app folder:
     
-    python main_gui.py
+    python main.py
 
-## Demo files
+##Demo files
 Try speech recognition running:
 
     python speech/guess_game.py
@@ -47,3 +45,5 @@ Try speech recognition running:
 Try the text to speech by running:
    
     python speech/test_speak.py "hello world" "nice to meet you"
+    
+    

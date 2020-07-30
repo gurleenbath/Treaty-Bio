@@ -1,8 +1,15 @@
 import random
 import time
-
+import pyttsx3
 import speech_recognition as sr
 
+class speak:
+    def __init__(self):
+        self.engine = pyttsx3.init()
+
+    def speak(self, words):
+        self.engine.say(words)
+        self.engine.runAndWait()
 
 def recognize_speech_from_mic(recognizer, microphone):
     """Transcribe speech from recorded from `microphone`.
@@ -65,6 +72,9 @@ if __name__ == "__main__":
     # get a random word from the list
     word = random.choice(WORDS)
 
+    # create tts object
+    tts = speak()
+
     # format the instructions string
     instructions = (
         "I'm thinking of one of these words:\n"
@@ -72,9 +82,11 @@ if __name__ == "__main__":
         "You have {n} tries to guess which one.\n"
     ).format(words=', '.join(WORDS), n=NUM_GUESSES)
 
+    tts.speak(instructions)
+
     # show instructions and wait 3 seconds before starting the game
     print(instructions)
-    time.sleep(3)
+    time.sleep(1)
 
     for i in range(NUM_GUESSES):
         # get the guess from the user
@@ -86,13 +98,16 @@ if __name__ == "__main__":
         #     re-prompt the user to say their guess again. Do this up
         #     to PROMPT_LIMIT times
         for j in range(PROMPT_LIMIT):
-            print('Guess {}. Speak!'.format(i+1))
+            s = 'Guess {}. Speak!'.format(i+1)
+            print(s)
+            tts.speak(s)
             guess = recognize_speech_from_mic(recognizer, microphone)
             if guess["transcription"]:
                 break
             if not guess["success"]:
                 break
             print("I didn't catch that. What did you say?\n")
+            tts.speak("I didn't catch that. What did you say?")
 
         # if there was an error, stop the game
         if guess["error"]:
@@ -111,9 +126,12 @@ if __name__ == "__main__":
         # if no attempts left, the user loses the game
         if guess_is_correct:
             print("Correct! You win!".format(word))
+            tts.speak("Correct! You win!".format(word))
             break
         elif user_has_more_attempts:
             print("Incorrect. Try again.\n")
+            tts.speak("Incorrect. Try again.\n")
         else:
             print("Sorry, you lose!\nI was thinking of '{}'.".format(word))
+            tts.speak("Sorry, you lose! I was thinking of '{}'.".format(word))
             break
