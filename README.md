@@ -33,13 +33,13 @@ found [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
 * For bluetooth connectivity bluez is used
     * Manually install using: 
     
-      `pipenv install bluez`
+      pipenv install bluez
 
 
 ## Running the app
 Run the app from the bball_coach_app folder:
     
-    `python main_ui.py`
+    python main_ui.py
 
 ## Demo files
 Try speech recognition running:
