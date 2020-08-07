@@ -1,7 +1,9 @@
 import random
 import time
+
 import pyttsx3
 import speech_recognition as sr
+
 
 class speak:
     def __init__(self):

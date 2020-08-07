@@ -1,12 +1,14 @@
 import tkinter as tk
+from random import choice
+from tkinter import BOTH, BOTTOM
 from tkinter import filedialog as fd
-from tkinter import LEFT,RIGHT,BOTH,TOP,BOTTOM
+
+from coach.controller import coach_main
+from dialogs.ui import WindowSettings, WindowBluetooth, WindowAbout
 from speech.commands import Commands
 from speech.tts import speak
-from dialogs import WindowSettings, WindowBluetooth, WindowAbout
+from util.settings import AppSettings
 from util.wifi import have_internet
-
-
 
 PROGRAM_NAME = " Adaptive Basketball Coach "
 VERBOSE_HELP = False
@@ -14,6 +16,8 @@ VERBOSE_HELP = False
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
+        #TODO get screen resolution
+        self.iconbitmap("basketball.ico")
         self.geometry("640x480")
         self.title(PROGRAM_NAME)
 
@@ -73,48 +77,82 @@ class App(tk.Tk):
         self.tts = speak(have_internet)
 
         self.capture_status = CaptureStatus()
+        self.settings = AppSettings()
+        self.bluetooth_settings = self.settings.read_settings("Bluetooth")
+        self.app_settings = self.settings.read_settings("Settings")
+        self.coach = coach_main()
 
     def capture_callback(self):
-        if VERBOSE_HELP:
-            self.speech_commands.spkResultList()
-        self.tts.speak("Starting data capture.")
-        word = self.speech_commands.startCapture()
-        self.processCommand(word)
+        self.processCommand()
 
-    def processCommand(self, word):
-        self.lblOutput.insert(tk.END, "Processing command:" + word + "\n")
-        if word == "capture":
-            if (not self.capture_status):
-                self.tts.speak("Please record your result first")
-                self.speech_commands.spkResultList()
-                self.capture_status = True;
-            else:
-                self.tts.speak(f"Ready to capture")
-                self.capture_status = True;
+    def prompt(self, text):
+        self.tts.speak(text)
+        self.output(text)
 
+    def output(self, text):
+        self.lblOutput.insert(tk.END, text + "\n")
+        self.update_idletasks()
 
-        elif word == "stop":
-            self.lblOutput.insert(tk.END, "Processing command:" + word + "\n")
-            pass
-        elif word == "save":
-            pass
-        elif word == "help":
-            self.speech_commands.spkResultList()
-        elif word == "exit":
-            self.tk.destroy()
-        elif word == "left":
-            self.tts.speak(f"Data saved as {word}")
-        elif word == "right":
-            self.tts.speak(f"Data saved as {word}")
-        elif word == "short":
-            self.tts.speak(f"Data saved as {word}")
-        elif word == "long":
-            self.tts.speak(f"Data saved as {word}")
-        elif word == "make":
-            self.tts.speak("Nice shot!")
-            self.tts.speak(f"Data saved as {word}")
+    def processCommand(self):
+        global continue_variable
+        global command   # 0 do nothing, 1 get shot data, 2 get suggestion
 
+        doneProcessing = False
+        self.capture_status.isCapturing = False
 
+        # Main loop to listen for commands
+        while not doneProcessing:
+            self.prompt("Please speak a command")
+            word = self.speech_commands.get_command("")
+            self.output("Processing command: " + word)
+
+            if word == "capture":
+                if (not self.capture_status.isCapturing):
+                    self.capture_status.isCapturing = True
+
+                ### TODO start capturing data
+                #self.coach.getShotData()
+                ### TODO get event notification
+                self.prompt("Motion data capture in progress")
+                time.sleep(1.5)
+                self.prompt("Motion data capture complete")
+                self.output("Speak the result of the shot")
+                word = self.speech_commands.get_command("Speak the result of the shot")
+                if word == "cancel":
+                    self.prompt("Capture cancelled")
+                elif word in ["left", "right", "short", "long", "make"]:
+                    ### TODO call the save function(word)
+                    self.prompt(f"Result stored as {word}")
+                else:
+                    self.prompt(f"{word} is not valid in this context")
+            elif word == "stop":
+                self.output("Processing command: " + word)
+                self.capture_status.isCapturing = False
+                self.prompt("Stopping data capture")
+                res = ["Bend knees", "Follow through", "Turn your wrist", "Aim straight", "Aim higher", "Aim lower"]
+                feedback = choice(res)
+                self.prompt("My suggestion is to " + feedback)
+                self.prompt("Speak save to save this session, or cancel")
+            elif word == "cancel":
+                if (self.capture_status.isCapturing):
+                    ### TODO cancel data collection
+                    continue_variable = False
+                    self.prompt("Capture cancelled")
+                else:
+                    self.prompt("Please capture data first")
+            elif word == "save":
+                ### TODO call the save to csv function
+                self.prompt("Data file saved. Say capture to start next capture.")
+            elif word == "help":
+                self.output("Speak one of the available commands: " + ",".join(self.speech_commands.words))
+                self.speech_commands.spkCommandList()
+            elif word == "exit":
+                doneProcessing = True
+                self.destroy()
+
+    #############################
+    # Menu callbacks
+    #############################
     def load_callback(self):
         filetypes = (("CSV", "*.csv"),
                      ("Text", "*.txt"),
@@ -159,15 +197,8 @@ class App(tk.Tk):
 
 class CaptureStatus():
     def __init__(self):
-        self.isCapturing = False;
-
-
-class AppSettings():
-    #varDebug = tk.IntVar()
-    #varVerbose = tk.IntVar()
-
-    def __init__(self):
-        pass
+        self.isCapturing = False
+        self.isCaptured = False
 
 if __name__ == "__main__":
     app = App()

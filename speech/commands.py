@@ -1,13 +1,17 @@
 import speech_recognition as sr
+
 from speech.tts import speak
+
 
 class Commands:
     def __init__(self, have_internet):
         # Words that sphinx should listen closely for. 0-1 is the sensitivity
         # of the wake word.
+        # split into categories - coach commands for actions and result commands for describing motion capture result
         self.keywords = { "coach" : [("capture", 1),     # start the capture of data
                                       ("stop", 1),       # stop capture
                                       ("save", 1),       # save captured data points
+                                      ("cancel", 1),     # cancel current command
                                       ("exit", 1),       # exit app
                                       ("help", 1)],      # get a list of commands
                         "result": [("left", 1),
@@ -26,14 +30,6 @@ class Commands:
         for k in c:
             self.words.append(k[0])
 
-        self.result = [("left", 1),
-                       ("right", 1),
-                       ("short", 1),
-                       ("long", 1),
-                       ("make", 1)]
-
-        self.result_list = ["left", "right", "short", "long", "make"]
-
         self.feedback = {"ns" : "No suggestion",
                          "ft" : "Follow through",
                          "cw" : "Turn wrist",
@@ -47,9 +43,6 @@ class Commands:
         # initialize tts
         self.have_internet = have_internet
         self.tts = speak(have_internet)
-
-        self.recognizer = sr.Recognizer()
-        self.microphone = sr.Microphone()
 
 
     def spkCoachList(self):
@@ -109,7 +102,8 @@ class Commands:
         #     update the response object accordingly
         try:
             if self.have_internet:
-                response["transcription"] = recognizer.recognize_google(audio)
+                response["transcription"] = recognizer.recognize_sphinx(audio)
+                #response["transcription"] = recognizer.recognize_google(audio)
             else:
                 response["transcription"] = recognizer.recognize_sphinx(audio)
         except sr.RequestError:
@@ -118,36 +112,39 @@ class Commands:
             response["error"] = "API unavailable"
         except sr.UnknownValueError:
             # speech was unintelligible
+            response["success"] = False
             response["error"] = "Unable to recognize speech"
 
         return response
 
 
-    def startCapture(self):
+    def get_command(self, text=None):
         '''
         startCapture - initialize the SR libray and listen for commands
         :return: None
         '''
 
         # create recognizer and mic instances
-        #self.recognizer = sr.Recognizer()
-        #self.microphone = sr.Microphone()
+        self.recognizer = sr.Recognizer()
+        self.microphone = sr.Microphone()
 
         #self.recognizer.adjust_for_ambient_noise(self.microphone)
         #self.recognizer.listen_in_background(self.microphone, self.callback)
 
+        txt = text if not (text  is None) else "Speak a command"
         done = False
         while (not done):
-            self.tts.speak("Speak a command")
+            self.tts.speak(txt)
             guess = self.recognize_speech_from_mic(self.recognizer, self.microphone)
             if guess["transcription"]:
                 word = guess["transcription"].lower()
                 print(f"You said {word}")
-                if word == 'help':
-                    self.spkResultList()
-                elif word in self.words:
+                #if word == 'help':
+                #    self.spkResultList()
+                if word in self.words:
                     print(f"Found word")
                     done=True
+                    break
                 else:
                     if not guess["success"]:
                         print("I didn't catch that. What did you say?\n")

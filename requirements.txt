@@ -1,0 +1,9 @@
+pyaudio
+speechrecognition
+bluepy
+blue-st-sdk
+pyttsx3
+numpy
+pandas
+scipy
+sklearn

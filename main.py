@@ -1,9 +1,10 @@
 import time
 
-from coach.get_motion import *
 from coach.get_feedback import *
+from coach.get_motion import *
 from coach.get_suggestion import *
 from coach.shared_variables import *
+
 
 def __main__():
 
