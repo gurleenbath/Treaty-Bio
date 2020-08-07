@@ -1,15 +1,15 @@
-#Adaptive Basketball Coach
+# Adaptive Basketball Coach
 
 Utilizing motion sensing wearable technology, our application will train a 
 model on a basketball players specific motion characteristics and provide 
 feedback on a shot by shot basis.
 
-##Hardware
+## Hardware
 The application was tested on the following configuration:
 * SensorTile STM32L4  
 * Raspberry Pi Zero W
 
-##Installation requirements
+## Installation requirements
 
 The are several technologies being employed:
 * Bluetooth for capturing motion data
