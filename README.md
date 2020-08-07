@@ -36,7 +36,7 @@ The are several technologies being employed:
 ## Installing the training application
 1. Clone the repo into a local folder
     
-    [github](github.com)
+    [github.com/gurleenbath/Treaty-Bio](https://github.com/gurleenbath/Treaty-Bio)
 
     
 3.  Install all the dependencies (this will take some time) 
