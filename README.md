@@ -41,7 +41,7 @@ The are several technologies being employed:
     
 3.  Install all the dependencies (this will take some time) 
 
-    <code>pip3 install -r requirements.txt</code>
+    <code>sudo pip3 install -r requirements.txt</code>
 
     
 ## Running the app
@@ -51,21 +51,21 @@ The are several technologies being employed:
     
     For the UI version, run this:
     
-    <code>python main_ui.py</code>
+    <code>sudo python3 main_ui.py</code>
     
     For the command line version run this:
     
-    <code>python main.py</code>
+    <code>sudo python3 main.py</code>
     
 
 
 ##Demo files
 Try speech recognition running:
 
-    python speech/guess_game.py
+    sudo python3 speech/guess_game.py
 
 Try the text to speech by running:
    
-    python speech/test_speak.py "hello world" "nice to meet you"
+    sudo python3 speech/test_speak.py "hello world" "nice to meet you"
     
     
