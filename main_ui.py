@@ -1,6 +1,6 @@
 import tkinter as tk
 from random import choice
-from tkinter import BOTH, BOTTOM
+from tkinter import LEFT,RIGHT,BOTH,TOP,BOTTOM
 from tkinter import filedialog as fd
 
 from coach.controller import coach_main
@@ -17,7 +17,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         #TODO get screen resolution
-        self.iconbitmap("basketball.ico")
+        #self.iconbitmap("basketball.ico")
         self.geometry("640x480")
         self.title(PROGRAM_NAME)
 
@@ -110,11 +110,9 @@ class App(tk.Tk):
                 if (not self.capture_status.isCapturing):
                     self.capture_status.isCapturing = True
 
-                ### TODO start capturing data
-                #self.coach.getShotData()
                 ### TODO get event notification
                 self.prompt("Motion data capture in progress")
-                time.sleep(1.5)
+                self.coach.getShotData()
                 self.prompt("Motion data capture complete")
                 self.output("Speak the result of the shot")
                 word = self.speech_commands.get_command("Speak the result of the shot")
@@ -129,9 +127,8 @@ class App(tk.Tk):
                 self.output("Processing command: " + word)
                 self.capture_status.isCapturing = False
                 self.prompt("Stopping data capture")
-                res = ["Bend knees", "Follow through", "Turn your wrist", "Aim straight", "Aim higher", "Aim lower"]
-                feedback = choice(res)
-                self.prompt("My suggestion is to " + feedback)
+                result = self.coach.getSuggestion()
+                self.prompt("My suggestion is to " + result)
                 self.prompt("Speak save to save this session, or cancel")
             elif word == "cancel":
                 if (self.capture_status.isCapturing):

@@ -14,7 +14,7 @@ class WindowSettings(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.iconbitmap("settings.ico")
+        #self.iconbitmap("settings.ico")
         self.geometry("320x200")
         self.settings = AppSettings()
         self.appsettings = self.settings.read_settings("Settings")
@@ -49,7 +49,7 @@ class WindowBluetooth(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.iconbitmap("bluetooth.ico")
+        #self.iconbitmap("bluetooth.ico")
         self.settings = AppSettings()
         self.bluetooth_settings = self.settings.read_settings("Bluetooth")
         self.list = tk.Listbox(self, selectmode = SINGLE)
@@ -87,7 +87,7 @@ class WindowAbout(tk.Toplevel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.iconbitmap("about.ico")
+        #self.iconbitmap("about.ico")
         self.geometry("250x120")
         self.grpData = tk.LabelFrame(self, padx=5, pady=5, text="About")
         self.grpData.pack(fill=tk.BOTH, padx=10, pady=5)

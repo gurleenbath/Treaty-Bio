@@ -12,6 +12,7 @@ def get_suggestion():
     global command
     global command_lock
     global motion_data
+    global speaker              
 
 #To do
 #  Import data points in motion data
@@ -26,7 +27,7 @@ def get_suggestion():
             rows = motion_data.shape()[0]
             followThroughIncrease = np.array((width-2)*[0])
             useYourLegsIncrease = np.array((width-2)*[0])
-            suggestions = data_motion['suggestion'].to_numpy()
+            suggestions = motion_data['suggestion'].to_numpy()
             followThroughs = suggestions.count('followThrough')
             useYourLegs = suggestions.count('useYourLegs')
             values = motion_data.drop(['make', 'suggestion'])
