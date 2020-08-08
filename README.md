@@ -46,8 +46,7 @@ The are several technologies being employed:
     
 ## Running the app
 1. On the Raspberry Pi, open a terminal and cd to the cloned repo folder
-2. Shell to the virtual environment and run the app:
-    <code>pipenv shell</code>
+2. Run the app:
     
     For the UI version, run this:
     
@@ -59,7 +58,7 @@ The are several technologies being employed:
     
 
 
-##Demo files
+## Demo files
 Try speech recognition running:
 
     sudo python3 speech/guess_game.py
