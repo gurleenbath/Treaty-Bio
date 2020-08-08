@@ -5,6 +5,8 @@ import datetime
 import click
 import pandas as pd
 from abc import abstractmethod
+
+from scipy import integrate
 from scipy.integrate import simps
 
 from blue_st_sdk.manager import Manager
@@ -13,9 +15,11 @@ from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
 from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm import FeatureAudioADPCM
 
+from coach.get_feedback import wait_for_speaker
 from coach.shared_variables import *
 
 data = ''
+NOTIFICATIONS = 40
 
 #overload print
 def print(message):
@@ -45,7 +49,7 @@ class MyNodeListener(NodeListener):
 class MyFeatureListener(FeatureListener):
     notifications = 0
     def on_update(self, feature, sample):
-        if self._notifications < notifications:
+        if self._notifications < NOTIFICATIONS:
             self._notifications += 1
             print(feature)
 
@@ -59,6 +63,7 @@ def get_motion():
     global data_lock
     global command
     global command_lock
+    global connection_tries
     global data
     scanning_time_s = 3
     devices = []
