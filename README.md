@@ -4,7 +4,6 @@ Utilizing motion sensing wearable technology, our application will train a
 model on a basketball players specific motion characteristics and provide 
 feedback on a shot by shot basis.
 
-[Demo Video](https://vimeo.com/446272449)
 
 ## Hardware
 The application was tested on the following configuration:
@@ -65,6 +64,10 @@ The are several technologies being employed:
 
 
 ## Demo files
+
+
+[Demo Video](https://vimeo.com/446272449)
+
 Try speech recognition running:
 
     sudo python3 speech/guess_game.py
