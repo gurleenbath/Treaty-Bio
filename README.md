@@ -4,6 +4,8 @@ Utilizing motion sensing wearable technology, our application will train a
 model on a basketball players specific motion characteristics and provide 
 feedback on a shot by shot basis.
 
+[Demo Video](https://vimeo.com/446272449)
+
 ## Hardware
 The application was tested on the following configuration:
 * SensorTile STM32L4  
