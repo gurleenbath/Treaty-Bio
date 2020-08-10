@@ -4,7 +4,15 @@ Utilizing motion sensing wearable technology, our application will train a
 model on a basketball players specific motion characteristics and provide 
 feedback on a shot by shot basis.
 
-[Demo Video](https://vimeo.com/446272449)
+[Project Video](https://vimeo.com/446272449)
+
+## Repo structure
+* Writeup report is in the writeup folder
+* Demo videos are in the video folder
+* Powerpoint slides are in the slides folder
+* Data is int data folder
+* The rest is for the python sources
+
 
 ## Hardware
 The application was tested on the following configuration:
