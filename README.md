@@ -29,11 +29,15 @@ The are several technologies being employed:
 
 ### Raspberry Pi installation
 1. Make sure python 3.7 is installed
-    
+
+    <code>sudo python3 --version</code>
+
+2. Update the packages index
+
     <code>sudo apt update</code>
 
 
-## Installing the training application
+#### Installing the training application
 1. Clone the repo into a local folder
     
     [github.com/gurleenbath/Treaty-Bio](https://github.com/gurleenbath/Treaty-Bio)
@@ -44,7 +48,7 @@ The are several technologies being employed:
     <code>sudo pip3 install -r requirements.txt</code>
 
     
-## Running the app
+### Running the app
 1. On the Raspberry Pi, open a terminal and cd to the cloned repo folder
 2. Run the app:
     
